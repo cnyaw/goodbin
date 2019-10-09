@@ -1,2 +1,5 @@
 # goodbin
-binary of good game editor
+Binary of good game editor
+
+Source code https://github.com/cnyaw/good
+
