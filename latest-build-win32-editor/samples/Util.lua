@@ -1,4 +1,13 @@
 
+function FillImage(canvas, x, y, tex, w, h)
+  local cx, cy = Resource.GetTexSize(tex)
+  for ay = 0, h, cy do
+    for ax = 0, w, cx do
+      Graphics.DrawImage(canvas, ax, ay, tex, 0, 0, cx, cy)
+    end
+  end
+end
+
 function GenColorObj(parent, w, h, color, script)
   local _parent = parent
   if (nil == parent) then
@@ -168,6 +177,14 @@ function PtInRect(x, y, left, top, right, bottom)
     return true
   else
     return false
+  end
+end
+
+function RotSign(vx, vy, tx, ty)
+  if (vy * tx > vx * ty) then
+    return -1
+  else
+    return 1
   end
 end
 
