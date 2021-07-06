@@ -36,6 +36,20 @@ function GenColorObj(parent, w, h, color, script)
   return o
 end
 
+function GenDotLineObj(parent, x1, y1, x2, y2, sz, gap, color)
+  local len = math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2))
+  local delta = 1 / (len / gap)
+  local t = 0
+  while (true) do
+    local o = GenColorObj(parent, sz, sz, color)
+    Good.SetPos(o, Lerp(x1, x2, t), Lerp(y1, y2, t))
+    t = t + delta
+    if (1 <= t) then
+      break
+    end
+  end
+end
+
 function GenStrObj(parent, x, y, str, texture, charw, charh, color)
   if (nil == str) then
     return -1
@@ -158,11 +172,16 @@ function Lshift(x, by)                  -- Bitwise left shift.
   return x * 2 ^ by
 end
 
-function PtInObj(x, y, o)
+function PtInObj(x, y, o, world)
   if (0 == Good.GetVisible(o)) then
     return false
   end
-  local ox, oy = Good.GetPos(o)
+  local ox, oy
+  if (nil ~= world) then
+    ox, oy = Good.GetPos(o, world)
+  else
+    ox, oy = Good.GetPos(o)
+  end
   local l, t, w, h = Good.GetDim(o)
   local sx, sy = Good.GetScale(o)
   local ax, ay = Good.GetAnchor(o)
